@@ -93,7 +93,7 @@ C = Button(btn_row5, width=1, height=1, fg='black', font=cal_font2, text=",", bg
 evaluate = Button(btn_row5, width=1, height=1, fg='black', font=cal_font, text="=", bg=bgc, command=evaluate)
 row5 = (change,btn_0,C,evaluate)
 
-for ls in row1,row2,row3,row4,row5: #buttons of each frame, starting form left side with option with option to expand/shrink
+for ls in row1,row2,row3,row4,row5: #buttons of each frame, starting form left side with option to expand/shrink
     for row in ls:
         row.pack(side=LEFT, expand=TRUE, fill=BOTH)
         
