@@ -14,9 +14,11 @@ cal_font = ('calibri', 20) #default font
 cal_font2 = ('calibri', 20 ,'bold')  
 
 #function to update dispaly
-def click(br):
+def click(*args):
     global screen
-    screen = screen + str(br)
+    pos =len(display.get())
+    display.insert(pos, *args)
+    screen = display.get()
     text_Input.set(screen)
 
 #function to clear display
@@ -26,9 +28,9 @@ def clear():
     text_Input.set("")
 
 #function to evaluate display
-def evaluate():
+def evaluate(*args):
     global screen
-    screen = str(eval(screen))
+    screen = str(eval(display.get()))
     text_Input.set(screen)
 
 #function for square
@@ -48,9 +50,12 @@ def change():
     global screen
     screen = str(eval(screen)*(-1))
     text_Input.set(screen)
-
+    
+    
 display = Entry(cal, font=cal_font, textvariable = text_Input, bd=8, insertwidth=2,
                    bg=bgc, justify= 'right')
+display.bind("<Return>", evaluate) #keyboard Enter as evaluate
+display.focus_set() #focus on display to activate the keyboard
 display.pack(expand=TRUE, fill=BOTH) #first object, with option to expand/shrink
 
 btn_row1 = Frame(cal)
@@ -90,8 +95,8 @@ btn_row5.pack(expand=TRUE, fill=BOTH)
 change = Button(btn_row5, width=1, height=1, fg='black', font=cal_font2, text="+/-", bg=bgc2, command=change)
 btn_0 = Button(btn_row5, width=1, height=1, fg='black', font=cal_font2, text="0", bg=bgc2, command=lambda:click(0))
 C = Button(btn_row5, width=1, height=1, fg='black', font=cal_font2, text=",", bg=bgc2, command=lambda:click(','))
-evaluate = Button(btn_row5, width=1, height=1, fg='black', font=cal_font, text="=", bg=bgc, command=evaluate)
-row5 = (change,btn_0,C,evaluate)
+btn_eval = Button(btn_row5, width=1, height=1, fg='black', font=cal_font, text="=", bg=bgc, command=evaluate)
+row5 = (change,btn_0,C,btn_eval)
 
 for ls in row1,row2,row3,row4,row5: #buttons of each frame, starting form left side with option to expand/shrink
     for row in ls:
